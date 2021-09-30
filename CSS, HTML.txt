@@ -1,0 +1,92 @@
+CSS, HTML
+Задание
+Опишите все известные вам способы позиционирования 5 элементов по центру, каждый из которых должен занимать 20%.
+
+	Ширина блока
+	width: 20%
+	Блок по горизонтали центрируется 
+	- margin: auto
+	- margin: left 40$
+	  margin: rihgt: 40%
+
+Опишите все известные вам способы позиционирования модального окна, по центру экрана.
+
+	Использованть свойства transform и его значения translate
+		.modal {
+	    position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    transform: translate(-50%, -50%);
+	}
+	
+	.modal_container {
+	    padding: 20px;
+	    background-color: #fff;
+	    color: #000;
+	}
+	Инлайн блоки и свойство vertical-align. Если этому свойству задать значение middle, то элементы с этим свойством будут 
+	центрироваться по-вертикали друг относительно друга.
+	<div class="fixed-overlay fixed-overlay__modal">
+	    <div class="modal">
+	        <div class="modal_container">    
+	        </div>
+	    </div>
+	</div>
+
+
+	.fixed-overlay__modal {
+	    text-align: center;
+	    white-space: nowrap;
+	}
+
+	.fixed-overlay__modal::after {
+	    display: inline-block;
+	    vertical-align: middle;
+	    width: 0;
+	    height: 100%;
+	    content: '';
+	}
+
+	.modal {
+	    display: inline-block;
+	    vertical-align: middle;
+	}
+
+	.modal_container {
+	    margin: 50px;
+	    padding: 20px;
+	    min-width: 200px;
+	    text-align: left;
+	    white-space: normal;
+	    background-color: #fff;    
+	    color: #000;
+	}
+
+
+Напишите стили для кнопки, которая может иметь несколько состояний: active, disabled, danger. Цвета произвольные.
+
+	active
+	<a href="#" role="button" aria-pressed="true">Primary link</a>
+	<a href="#" role="button" aria-pressed="true">Link</a>
+	disabled
+	.progress-button[disabled],
+	.progress-button[disabled].state-loading {
+	    cursor: default;
+	}
+	danger
+	<button type="button">Danger</button>
+
+Сверстайте страницу логина, которая должна содержать только форму с полями email, password.
+
+	<form action="/my-handling-form-page" method="post">
+  <ul>
+    <li>
+      <label for="mail">E-mail:</label>
+      <input type="text" id="mail" name="user_mail">
+    </li>
+    <li>
+      <label for="password">password:</label>
+      <input type="password" id="password" name="user_password">
+    </li>
+  </ul>
+</form>

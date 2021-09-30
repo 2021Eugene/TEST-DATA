@@ -1,0 +1,33 @@
+Mongo
+Рабочее окружение
+База данных MongoDB содержит коллекции:
+posts - Записи - 
+{
+  "properties": {
+    "_id": { "bsonType": "objectId" },
+    "title": { "bsonType": "string" },
+    "content": { "bsonType": "string" },
+    "author": { "bsonType": "string" },
+    "like": { "bsonType": "int" },
+    "dislike": { "bsonType": "int" }
+  }
+}
+
+Все команды вы выполняете в mongo shell
+Задание
+Напишите команды для получения следующих значений:
+Выведите 5 записей из коллекции posts пропустив первые 5
+	
+	> db.posts.find().skip(5)
+
+Выведите все записи у которых like больше 100
+
+	> db.posts.find( { like: { $gte: 100 } } )
+
+Добавьте новую запись в коллекцию posts
+
+	> db.posts.inserOne( { "critic": { "bsonType": "string" } } )
+
+Выведите список авторов и их общее количество like
+
+	db.author.find( "author" ).count( "like" )

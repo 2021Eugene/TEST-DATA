@@ -1,0 +1,195 @@
+JS логика
+Данные для заданий
+let testData = [1, 2, 1990, 85, 24, "Vasya", "colya@example.com", "Rafshan", "ashan@example.com", true, false];
+let testData2 = [1, 2, 1990, 85, 24, 5, 7, 8.1];
+let testData3 = [{"name":"Vasya","email":"vasya@example.com","age":20,"skills":{"php":0,"js":-1,"madness":10,"rage":10}},
+		{"name":"Dima","email":"dima@example.com","age":34,"skills":{"php":5,"js":7,"madness":3,"rage":2}},
+		{"name":"Colya","email":"colya@example.com","age":46,"skills":{"php":8,"js":-2,"madness":1,"rage":4}},
+		{"name":"Misha","email":"misha@example.com","age":16,"skills":{"php":6,"js":6,"madness":5,"rage":2}},
+		{"name":"Ashan","email":"ashan@example.com","age":99,"skills":{"php":0,"js":10,"madness":10,"rage":1}},
+		{"name":"Rafshan","email":"rafshan@example.com","age":11,"skills":{"php":0,"js":0,"madness":0,"rage":10}}]
+let testData4 = [{"name":"Vasya","email":"vasya@example.com","age":20},
+		{"name":"Dima","email":"dima@example.com","age":34},
+		{"name":"Colya","email":"colya@example.com","age":46},
+		{"name":"Misha","email":"misha@example.com","age":16},
+		{"name":"Ashan","email":"ashan@example.com","age":99},
+		{"name":"Rafshan","email":"rafshan@example.com","age":11},
+		1,2,1990,85,24,"Vasya","colya@example.com","Rafshan","ashan@example.com",true,false,
+		[[[[1,2,1990,85,24,"Vasya","colya@example.com","Rafshan","ashan@example.com",true,false,
+		[{"name":"Rafshan","email":"rafshan@example.com","age":11}]]]]]]
+
+Задание
+	
+	1.Напишите функцию cloneDeep таким образом, чтобы она была способна клонировать переданный как параметр объект.
+	var copy = Object.assign({}, testData4);
+	console.log(copy);
+	
+2.Свертка. Используйте метод reduce в комбинации с concat для свёртки массива массивов в один массив, у которого есть все элементы входных массивов.
+var arrays = [[1, 2, 3], [4, 5], [6]];
+// Ваш код 
+// → [1, 2, 3, 4, 5, 6]
+	
+	var arrays = [[1, 2, 3], [4, 5], [6]];
+	arrays = arrays.reduce(function(a, b) {
+    		return a.concat(b);
+	});
+	console.log( arrays );
+
+	3.  Допустим, у вас есть функция primitiveMultiply, которая в 50% случаев перемножает 2 числа, 
+а в остальных случаях выбрасывает исключение типа MultiplicatorUnitFailure. Напишите функцию, 
+обёртывающую эту, и просто вызывающую её до тех пор, пока не будет получен успешный результат.
+	function MultiplicatorUnitFailure() {}
+	function primitiveMultiply(a, b) {
+	  if (Math.random() < 0.5)
+	    return a * b;
+	  else
+	    throw new MultiplicatorUnitFailure();
+	}
+	function reliableMultiply(a, b) {
+	   try {
+	    return primitiveMultiply(a, b);
+	  } catch (e) {
+	    if (e instanceof MultiplicatorUnitFailure) {
+	      return reliableMultiply(a, b);
+	    } else {
+	      throw e;
+	    }
+	  }
+	}
+	console.log(reliableMultiply(8, 8));
+	
+	4. Расширить прототип Array, добавив к нему метод добавления элемента в начало без использование unshift.
+var arr = [1, 2, 3];
+arr.append(0);
+//[0, 1, 2, 3]
+
+	var arr = [1, 2, 3];
+		arr.reverse()
+		arr.push(0)
+		arr.reverse()
+	console.log( arr );
+или
+	var arr = [1, 2, 3];
+		 x = 0;
+		++arr.length;
+		arr.copyWithin(1, 0);
+		arr[0] = x;
+	console.log( arr );
+	
+	5. Выведите все элементы массива используя рекурсию.
+var arr = ['Solnce', 'vishlo', 'iz', 'za', 'tuchi']; 
+fuction recuseLog(* Ваши атрибуты *) { } 
+recuseLog(arr);
+
+	var arr = ['Solnce', 'vishlo', 'iz', 'za', 'tuchi']; 
+	function recuseLog(array) {
+	  if (array.length > 0) {
+	    console.log(array.shift());
+	    recuseLog(array);
+	  }
+	} 
+	recuseLog(arr);
+
+	6. Написать функцию для выполнения параллельных вычислений без использования Promise.
+var a = function(one, two) {
+  return one + two
+}
+var b = function() {
+  return false;
+}
+paralell([[a, [1, 2]], [b]], function(results) {
+    console.log(results); // [3, false]
+});
+	Не разобрался (не понял условия), но для выполнения параллельных вычислений без использования Promise
+	надо использовать async/await
+	
+	7. Сделать функцию поиска значений в массиве.
+Синтаксис: array_find(arr: array, search: string|regex): string|number[]|null
+Пример: 
+let result = array_find(testData, '/^raf.*/i') // ["Rafshan"]
+let result2 = array_find(testData, "Rafshan") // ["Rafshan"]
+	let result = testData.find(testData => testData ==='Rafshan')
+	console.log(result)	
+
+	8. Сделать функцию которая обрезает массив до указанного значения.
+Синтаксис: array_skip_until(arr: array, value: any): any[]
+Пример: 
+let result = array_skip_until(testData, 2) // [2, 1990, 85, 24, "Vasya", "colya@example.com", "Rafshan", "ashan@example.com", true, false]
+let result2 = array_skip_until(testData, "Rafshan") // ["Rafshan", "ashan@example.com", true, false]
+let result3 = array_skip_until(testData, "asd") // []
+	var pos = 0, 
+	n = testData.indexOf("asd")
+	function result(n) {
+	if (n === -1) {
+	return n = testData.length
+	}  else {
+	   return n = n;
+	}
+	}
+	  n = result(n)
+	var removedItems = testData.splice(pos, n);
+	console.log(testData);
+	
+	9. Создать функцию которая нормализует данные в массиве исключая или преобразуя не подходящие.
+Доступные шаблоны: 
+'string' => строки, 
+'number' => числа, 
+'int' => целые числа, 
+'float' => числа с плавающей точкой, 
+'bool' => true | false, 
+'function' => функция, 
+'array' => массив, 
+Object => объект {name: 'string'}
+Синтаксис: array_normalize(arr: array, shema: string|Object[, transform: bool = false]): any[]
+Пример: 
+let result = array_normalize(testData4, 'string') // ['Vasya', 'colya@example.com', 'Rafshan', 'ashan@example.com']
+
+let result2 = array_normalize(testData4, 'string', true) // ['1', '2', '1990', '85', '24', 'Vasya', 'colya@example.com', 'Rafshan', 'ashan@example.com']
+
+let result3 = array_normalize(testData4, {age: 'float'}) // []
+'string' => строки,
+	testData4 = testData4.filter((n) => {return toString.call(n) == '[object String]'});
+	console.log(testData4);
+'number' => числа,	
+	testData4 = testData4.filter((n) => {return Number(n)});
+	console.log(testData4);
+'int' => целые числа, 	
+	testData4 = testData4.filter((n) => {return Number.isInteger(n)});
+	console.log(testData4);
+let result4 = array_normalize(testData4, {age: 'float'}, true) // [{age: 20}, {age: 34}, {age: 46}, {age: 16}, {age: 99}, {age: 11}]
+
+
+	10. Сделать функцию которая возвращает уникальные элементы массива.
+Синтаксис: array_unique(arr: array): any[]
+Пример:
+let result = array_unique(testData.concat(testData2)) // [1, 2, 1990, 85, 24, 5, 7, 8.1, "Vasya", "colya@example.com", "Rafshan", "ashan@example.com", true, false]
+	function arrayUnique(array) {
+	    let a = array.concat()
+	    for (let i=0; i<a.length; ++i) {
+	        for (let j=i+1; j<a.length; ++j) {
+	            if(a[i] === a[j])
+	                a.splice(j--, 1)
+	        }
+	    }
+	    return a
+	};
+	let array3 = arrayUnique(testData.concat(testData2))
+	console.log(array3);
+     
+	11. Сделать функцию которая сможет делать срез данных с ассоциативного массива.
+Синтаксис: array_pluck(arr: array, path: string): any[]
+Пример:
+let result = array_pluck(testData3, 'name') // ["Vasya", "Dima", "Colya", "Misha", "Ashan", "Rafshan"]
+	let result = testData3.map((n) => {return n.name});
+	console.log(result)
+let result2 = array_pluck(testData3, 'skills.php') // [0, 5, 8, 6, 0, 0]
+	let result = testData3.map((n) => {return n.skills.php});
+	console.log(result);
+     
+	12. Создать функцию которая создает объект на основании двух представленных массивов используя один как ключи, а другой как значения. Не подходящие ключи массивов должны быть исключены.
+Синтаксис: array_combine(keys: array, values: array): Object
+Пример: 
+let result = array_combine(testData, testData2) // {1: 1, 2: 2, 1990: 1990, 85: 85, 24: 24, "Vasya": 5, "colya@example.com": 7, "Rafshan": 8.1, "ashan@example.com": undefined}
+	var result = {};
+	testData.forEach((testData, i) => result[testData] = testData2[i]);
+	console.log(result);
